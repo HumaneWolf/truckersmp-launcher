@@ -5,7 +5,7 @@ from tkinter import messagebox
 import os
 from subprocess import call
 from truckersmplauncher.settings import Settings
-from truckersmplauncher.update import Update
+#from truckersmplauncher.update import Update
 import platform
 
 class Launcher:
@@ -86,13 +86,19 @@ class Launcher:
 
     #Games
     def launchETS2MP(self):
-        call([self.settings.tmpdir + "\launcher_ets2mp.exe"])
+        try:
+            call([self.settings.tmpdir + "\launcher_ets2mp.exe"])
+        except FileNotFoundError:
+                tkinter.messagebox.showerror("ERROR", "File not found: Your TruckersMP path is not set properly.")
         print("Launching Euro Truck Simulator 2 MP")
         self.quit()
 
     def launchETS2(self):
         if (self.is64bitWin() == True):
-            call([self.settings.ets2dir + "\\bin\win_x64\eurotrucks2.exe"])
+            try:
+                call([self.settings.ets2dir + "\\bin\win_x64\eurotrucks2.exe"])
+            except FileNotFoundError:
+                tkinter.messagebox.showerror("ERROR", "File not found: Your Euro Truck Simulator 2 path is not set properly.")
             print("Launching Euro Truck Simulator 2 SP 64bit")
             self.quit()
         else:
@@ -101,12 +107,18 @@ class Launcher:
             self.quit()
 
     def launchATSMP(self):
-        call([self.settings.tmpdir + "\launcher_ets2mp.exe"])
+        try:
+            call([self.settings.tmpdir + "\launcher_atsmp.exe"])
+        except FileNotFoundError:
+                tkinter.messagebox.showerror("ERROR", "File not found: Your TruckersMP path is not set properly.")
         print("Launching American Truck Simulator MP")
         self.quit()
 
     def launchATS(self):
-        call([self.settings.atsdir + "\\bin\win_x64\\amtrucks.exe"])
+        try:
+            call([self.settings.atsdir + "\\bin\win_x64\\amtrucks.exe"])
+        except FileNotFoundError:
+                tkinter.messagebox.showerror("ERROR", "File not found: Your American Truck Simulator path is not set properly.")
         print("Launching American Truck Simulator 2 SP")
         self.quit()
 
