@@ -1,5 +1,9 @@
 import os.path
 import json
+import tkinter
+from tkinter import *
+from tkinter import font
+from tkinter import messagebox
 
 class Settings:
     def __init__(self, appdir):
@@ -36,9 +40,6 @@ class Settings:
             print("Making new settings file")
             self.saveSettings()
 
-        #Todo: Settings file, settings loading, settings saving, file generator.
-        #Format: JSON
-
     def saveSettings(self):
         data = {}
         data["tmpdir"] = self.tmpdir
@@ -51,3 +52,34 @@ class Settings:
         json.dump(data, file)
         file.close()
         print("New settings file generated")
+
+    def openSettings(self):
+        #Var
+        self.settings = tkinter.Tk()
+
+        #Setting some UI settings
+        self.settings.geometry("800x400")
+        self.settings.wm_title("TruckersMP Launcher Settings")
+
+        #fonts
+        self.font_head = font.Font(family = "Helvetica", size = 36, weight = "bold")
+
+        #Logos
+        self.image = tkinter.Canvas(self.settings, height = 400, width = 250)
+        logos = self.appdir + "\\logos.png"
+        logosimg = PhotoImage(master = self.image, width = 250, height = 400, file = logos) 
+        self.image.create_image(125, 200, image = logosimg)
+        self.image.pack(side = "left")
+
+        #Settings...
+        self.header = tkinter.Label(self.settings, text = "Settings...", font = self.font_head)
+        self.header.pack()
+
+        #Close button
+        self.quitButton = tkinter.Button(self.settings, command = self.quitSettings, text = "Close Settings")
+        self.quitButton.pack(side = "bottom")
+
+        tkinter.mainloop()
+
+    def quitSettings(self):
+        self.settings.destroy()

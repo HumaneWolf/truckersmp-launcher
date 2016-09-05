@@ -35,8 +35,8 @@ class Launcher:
         self.image.pack(side = "left")
 
         #Launch
-        self.launch = tkinter.Label(self.main, text = "Play...", font = self.font_head)
-        self.launch.pack()
+        self.header = tkinter.Label(self.main, text = "Play...", font = self.font_head)
+        self.header.pack()
 
         #Quitting
         self.quitButton = tkinter.Button(self.main, command = self.quit, text = "Quit Launcher")
@@ -46,7 +46,7 @@ class Launcher:
         self.settingsButton = tkinter.Button(self.main, command = self.openSettings, text = "Settings")
         self.settingsButton.pack(side = "bottom")
 
-        #ETS2
+        #ETS2 buttons
         self.ets2Menu = tkinter.Frame(self.main, width = 400, borderwidth = 5)
         self.ets2Menu.pack()
         ets2 = appdir + "\\ets2.gif"
@@ -56,7 +56,7 @@ class Launcher:
         self.ets2Button = tkinter.Button(self.ets2Menu, command = self.launchETS2, text = "Singleplayer")
         self.ets2Button.pack(side = "right")
 
-        #ATS
+        #ATS buttons
         self.atsMenu = tkinter.Frame(self.main, width = 400, borderwidth = 5)
         self.atsMenu.pack()
         ats = appdir + "\\ats.gif"
@@ -66,6 +66,7 @@ class Launcher:
         self.atsButton = tkinter.Button(self.atsMenu, command = self.launchATS, text = "Singleplayer")
         self.atsButton.pack(side = "right")
 
+        #Check and display a 32 bit warning if a 32 bit system is detected.
         if (self.is64bitWin() == False):
             self.bitWarning = tkinter.Label(self.main, text = "WARNING: You seem to be running a 32 bit operating system. This is not supported for Multiplayer nor American Truck Simulator.", font = self.font_bitwarning, foreground = "#ff0000", wraplength = 500)
             self.bitWarning.pack()
@@ -81,15 +82,16 @@ class Launcher:
 
     def openSettings(self):
         print("Opening settings")
-        tkinter.messagebox.showinfo("Settings", "This section has not been finished yet.")
-        #self.settingsChanged = True
+        self.settings.openSettings()
+        self.settingsChanged = True
+        self.quit()
 
     #Games
     def launchETS2MP(self):
         try:
             call([self.settings.tmpdir + "\launcher_ets2mp.exe"])
         except FileNotFoundError:
-                tkinter.messagebox.showerror("ERROR", "File not found: Your TruckersMP path is not set properly.")
+            tkinter.messagebox.showerror("ERROR", "File not found: Your TruckersMP path is not set properly.")
         print("Launching Euro Truck Simulator 2 MP")
         self.quit()
 
@@ -110,7 +112,7 @@ class Launcher:
         try:
             call([self.settings.tmpdir + "\launcher_atsmp.exe"])
         except FileNotFoundError:
-                tkinter.messagebox.showerror("ERROR", "File not found: Your TruckersMP path is not set properly.")
+            tkinter.messagebox.showerror("ERROR", "File not found: Your TruckersMP path is not set properly.")
         print("Launching American Truck Simulator MP")
         self.quit()
 
@@ -118,7 +120,7 @@ class Launcher:
         try:
             call([self.settings.atsdir + "\\bin\win_x64\\amtrucks.exe"])
         except FileNotFoundError:
-                tkinter.messagebox.showerror("ERROR", "File not found: Your American Truck Simulator path is not set properly.")
+            tkinter.messagebox.showerror("ERROR", "File not found: Your American Truck Simulator path is not set properly.")
         print("Launching American Truck Simulator 2 SP")
         self.quit()
 
@@ -137,7 +139,9 @@ class Launcher:
         else:
             return False
 
+#Load up the program itself.
 l = Launcher()
+#And reload it if a user changes their settings, now with the new settings.
 while (l.settingsChanged == True):
     l = Launcher()
 
