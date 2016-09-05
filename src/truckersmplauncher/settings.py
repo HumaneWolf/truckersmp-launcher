@@ -4,6 +4,7 @@ import tkinter
 from tkinter import *
 from tkinter import font
 from tkinter import messagebox
+from tkinter import filedialog
 
 class Settings:
     def __init__(self, appdir):
@@ -61,9 +62,6 @@ class Settings:
         self.settings.geometry("800x400")
         self.settings.wm_title("TruckersMP Launcher Settings")
 
-        #fonts
-        self.font_head = font.Font(family = "Helvetica", size = 36, weight = "bold")
-
         #Logos
         self.image = tkinter.Canvas(self.settings, height = 400, width = 250)
         logos = self.appdir + "\\logos.png"
@@ -72,12 +70,20 @@ class Settings:
         self.image.pack(side = "left")
 
         #Settings...
-        self.header = tkinter.Label(self.settings, text = "Settings...", font = self.font_head)
+        self.header = tkinter.Label(self.settings, text = "Settings...", font = ('Helvetica', '36', 'bold')) #For some unexplained reason specifying the font using an object doesn't work here. Specifying it using a tuple instead. No logical explanation. It worked using hte exact same code in the main class.
         self.header.pack()
 
         #Close button
         self.quitButton = tkinter.Button(self.settings, command = self.quitSettings, text = "Close Settings")
         self.quitButton.pack(side = "bottom")
+
+        #ETS2
+        self.ets2 = tkinter.Frame(self.settings, width = 400, borderwidth = 5)
+        self.ets2.pack()
+        ets2dirtxt = tkinter.StringVar()
+        ets2dirtxt.set(self.ets2dir)
+        self.ets2dirtxt = tkinter.Entry(self.ets2, textvariable = ets2dirtxt.get())
+        self.ets2dirtxt.pack()
 
         tkinter.mainloop()
 

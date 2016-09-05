@@ -84,7 +84,7 @@ class Launcher:
         print("Opening settings")
         self.settings.openSettings()
         self.settingsChanged = True
-        self.quit()
+        #self.quit()
 
     #Games
     def launchETS2MP(self):
