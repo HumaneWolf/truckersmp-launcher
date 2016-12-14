@@ -1,4 +1,4 @@
-#Official Launcher:
+#Discuntinued following the release of an official launcher
 
 https://truckersmp.com/blog/24
 
